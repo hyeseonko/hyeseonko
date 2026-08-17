@@ -1,0 +1,43 @@
+name: build profile
+
+on:
+  schedule:
+    # 20:00 UTC == 05:00 KST, so the page is fresh before I start the morning.
+    - cron: "0 20 * * *"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    # README.md is rewritten by this job; triggering on it would loop.
+    paths:
+      - scripts/**
+      - .github/workflows/build.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-profile
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Render SVGs and refresh README
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 scripts/build.py
+
+      - name: Commit if anything changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md assets
+          if git diff --cached --quiet; then
+            echo "nothing changed"
+          else
+            git commit -m "build: refresh profile cards and feeds"
+            git push
+          fi
