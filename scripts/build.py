@@ -8,6 +8,7 @@ rate limited. Standard library only -- no install step in CI.
 
 from __future__ import annotations
 
+import base64
 import json
 import os
 import re
@@ -16,7 +17,6 @@ import sys
 import urllib.error
 import urllib.request
 import xml.etree.ElementTree as ET
-from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 USER = "hyeseonko"
@@ -180,21 +180,17 @@ def collect_posts(limit: int = 4) -> list[dict]:
 
 
 def collect_leetcode(tok: str) -> dict:
-    # One directory per problem at the repo root. The contents endpoint ignores
-    # per_page and returns everything, so the tree API is the honest way to ask.
+    # Counting directories overstates the total: that repo carries two naming
+    # generations and 40 problems have a directory in each. It computes the real
+    # figure itself and publishes stats.json -- read that rather than re-deriving
+    # a number that would disagree with the one on the repo's own page.
     try:
-        tree = api(f"/repos/{LEETCODE_REPO}/git/trees/HEAD", tok)
-        solved = sum(1 for item in tree.get("tree", []) if item["type"] == "tree")
-    except urllib.error.HTTPError:
+        payload = api(f"/repos/{LEETCODE_REPO}/contents/stats.json", tok)
+        solved = int(json.loads(base64.b64decode(payload["content"]))["solved"])
+    except (urllib.error.HTTPError, KeyError, ValueError, TypeError):
         solved = 0
 
-    since = (datetime.now(timezone.utc) - timedelta(days=30)).strftime("%Y-%m-%dT%H:%M:%SZ")
-    try:
-        recent = api(f"/repos/{LEETCODE_REPO}/commits?since={since}&per_page=100", tok)
-        recent_count = len(recent)
-    except urllib.error.HTTPError:
-        recent_count = 0
-    return {"solved": solved, "recent": recent_count}
+    return {"solved": solved}
 
 
 def collect_activity(tok: str, limit: int = 5) -> list[dict]:
@@ -356,12 +352,8 @@ def main() -> None:
         blog = "<sub>Feed unreachable at build time.</sub>"
     text = replace_block(text, "BLOG", blog)
 
-    recent = lc["recent"]
-    headline = f"**{human(lc['solved'])}** problems solved"
-    if recent:  # a quiet month needs no announcement
-        headline += f" · **{recent}** commit{'s' if recent != 1 else ''} in the last 30 days"
     text = replace_block(text, "LEETCODE", "\n".join([
-        headline,
+        f"**{human(lc['solved'])}** problems solved",
         "",
         f"<sub>Solutions live in [{LEETCODE_REPO}](https://github.com/{LEETCODE_REPO}).</sub>",
     ]))
@@ -382,7 +374,7 @@ def main() -> None:
     print(
         f"commits={totals['commits']} prs={totals['prs']} stars={totals['stars']} "
         f"repos={totals['repos']} "
-        f"posts={len(posts)} leetcode={lc['solved']}/{recent} activity={len(activity)}"
+        f"posts={len(posts)} leetcode={lc['solved']} activity={len(activity)}"
     )
 
 
