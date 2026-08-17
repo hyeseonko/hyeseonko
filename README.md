@@ -43,7 +43,12 @@ work of keeping models running.
 <!-- LEETCODE:END -->
 
 <!-- ACTIVITY:START -->
+## Recent activity
 
+- [hyeseonko/LeetCode](https://github.com/hyeseonko/LeetCode) — pushed 1 commit  <sub>2026-08-17</sub>
+- [hyeseonko/PaperSurvey](https://github.com/hyeseonko/PaperSurvey) — pushed 1 commit  <sub>2026-08-17</sub>
+- [hyeseonko/hyeseonko](https://github.com/hyeseonko/hyeseonko) — pushed 1 commit  <sub>2026-08-17</sub>
+- [hyeseonko/hyeseonko.github.io](https://github.com/hyeseonko/hyeseonko.github.io) — pushed 1 commit  <sub>2026-08-17</sub>
 <!-- ACTIVITY:END -->
 
 ---
