@@ -28,8 +28,7 @@ work of keeping models running.
 ## Writing
 
 <!-- BLOG:START -->
-- [[TIL] Hash Maps: Trading Memory for Lookup Speed](https://hyeseonko.github.io/posts/hash-map-patterns-day1/)  <sub>2026-08-17</sub>
-- [Text and Typography](https://hyeseonko.github.io/posts/typora-test/)  <sub>2022-01-01</sub>
+- [Group Anagrams: Choosing a Canonical Key](https://hyeseonko.github.io/posts/group-anagrams-canonical-keys/)  <sub>2026-08-18</sub>
 
 <sub>More at [hyeseonko.github.io](https://hyeseonko.github.io)</sub>
 <!-- BLOG:END -->
@@ -45,10 +44,11 @@ work of keeping models running.
 <!-- ACTIVITY:START -->
 ## Recent activity
 
+- [hyeseonko/hyeseonko.github.io](https://github.com/hyeseonko/hyeseonko.github.io) — pushed 1 commit  <sub>2026-08-18</sub>
+- [hyeseonko/leetcode-archive](https://github.com/hyeseonko/leetcode-archive) — pushed 1 commit  <sub>2026-08-18</sub>
+- [hyeseonko/hyeseonko](https://github.com/hyeseonko/hyeseonko) — pushed 1 commit  <sub>2026-08-17</sub>
 - [hyeseonko/LeetCode](https://github.com/hyeseonko/LeetCode) — pushed 1 commit  <sub>2026-08-17</sub>
 - [hyeseonko/PaperSurvey](https://github.com/hyeseonko/PaperSurvey) — pushed 1 commit  <sub>2026-08-17</sub>
-- [hyeseonko/hyeseonko](https://github.com/hyeseonko/hyeseonko) — pushed 1 commit  <sub>2026-08-17</sub>
-- [hyeseonko/hyeseonko.github.io](https://github.com/hyeseonko/hyeseonko.github.io) — pushed 1 commit  <sub>2026-08-17</sub>
 <!-- ACTIVITY:END -->
 
 ---
